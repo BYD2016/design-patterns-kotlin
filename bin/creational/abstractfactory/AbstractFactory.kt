@@ -1,5 +1,7 @@
 //Based on: http://stackoverflow.com/a/13030163/361832
 
+package creational.abstractfactory
+
 interface Plant
 
 class OrangePlant : Plant

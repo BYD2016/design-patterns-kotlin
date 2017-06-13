@@ -1,15 +1,22 @@
+package structural.facade
+
+/*
+ The facade pattern is used to define a simplified interface to a
+ more complex subsystem.
+ */
+
 import java.util.*
 
 class ComplexSystemStore(val filePath: String) {
+	
+	val store = HashMap<String, String>()
 
     init {
         println("Reading data from file: $filePath")
     }
 
-    val store = HashMap<String, String>()
-
     fun store(key: String, payload: String) {
-        store.put(key, payload)
+        this.store.put(key, payload)
     }
 
     fun read(key: String): String = store[key] ?: ""
@@ -24,8 +31,10 @@ class UserRepository {
     val systemPreferences = ComplexSystemStore("/data/default.prefs")
 
     fun save(user: User) {
-        systemPreferences.store("USER_KEY", user.login)
-        systemPreferences.commit()
+        this.systemPreferences.apply {
+			store("USER_KEY", user.login)
+			commit()
+		} 
     }
 
     fun findFirst(): User = User(systemPreferences.read("USER_KEY"))
